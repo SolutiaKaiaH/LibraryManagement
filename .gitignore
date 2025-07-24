@@ -1,0 +1,53 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# ASP.NET / IIS
+wwwroot/
+PublishProfiles/
+
+# Build output
+[Bb]in/
+[Oo]bj/
+*/bin/
+*/obj/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# EF Migrations
+Migrations/
+
+# User secrets and config
+appsettings.Development.json
+appsettings.json
+*.local.settings.json
+
+# Blazor/WebAssembly
+wwwroot/_framework/
+wwwroot/_bin/
+
+# Node/npm (if you ever pull in JS)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE markers
+.vscode/
