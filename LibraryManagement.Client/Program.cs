@@ -9,9 +9,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-//builder.Configuration.AddJsonFile("/appsettings.json", optional: false, reloadOnChange: false);
+builder.Services.AddSyncfusionBlazor();
 
-//var licenseKey = builder.Configuration["Syncfusion:LicenseKey"];
-//Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey);
+var licenseKey = builder.Configuration["Syncfusion:LicenseKey"];
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey);
 
 await builder.Build().RunAsync();
