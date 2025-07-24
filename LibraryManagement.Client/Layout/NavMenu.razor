@@ -1,27 +1,68 @@
 ﻿@using Syncfusion.Blazor.Navigations
+@inject NavigationManager Nav
+@inject IJSRuntime JS
 
 <div class="control-section">
     <div class="menu-control">
-        <SfMenu CssClass="top-menu" Items="@MenuItems"></SfMenu>
+        <SfMenu CssClass="top-menu" Items="@MenuItems" HamburgerMode="@IsMobile" ShowItemOnClick="true"></SfMenu>
     </div>
 </div>
 
 @code {
+    private bool IsMobile;
+    private DotNetObjectReference<NavMenu>? _dotnetRef;
+
     private List<MenuItem> MenuItems { get; } = new List<MenuItem>
     {
-        new MenuItem { Id = "books", Text = "Books", IconCss = "bi bi-book" },
-        new MenuItem { Id = "readingLog", Text = "Reading Log" },
-        new MenuItem { Id = "wantToRead", Text = "Want to Read" },
-        new MenuItem { Id = "allBooks", Text = "All Books", ParentId = "books" },
-        new MenuItem { Id = "currentlyReading", Text = "Currently Reading", ParentId = "books" },
-        new MenuItem { Id = "didNotFinish", Text = "Did Not Finish", ParentId = "books" },
-        new MenuItem { Id = "completedBooks", Text = "Completed Books", ParentId = "books" }
+        new MenuItem { Id = "books", Text = "Books" },
+        new MenuItem { Id = "readingLog", Text = "Reading Log", Url="/reading-log" },
+        new MenuItem { Id = "wantToRead", Text = "Want to Read", Url="/want-to-read" },
+        new MenuItem { Id = "allBooks", Text = "All Books", ParentId = "books", Url="/books" },
+        new MenuItem { Id = "currentlyReading", Text = "Currently Reading", ParentId = "books", Url="/currently-reading" },
+        new MenuItem { Id = "didNotFinish", Text = "Did Not Finish", ParentId = "books", Url="/did-not-finish" },
+        new MenuItem { Id = "completedBooks", Text = "Completed Books", ParentId = "books", Url="/completed-books" }
     };
+
     private class MenuItem
     {
         public string Text { get; set; }
         public string Id { get; set; }
         public string ParentId { get; set; }
         public string? IconCss {get;set;}
+        public string? Url { get; set; }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _dotnetRef = DotNetObjectReference.Create(this);
+
+            // get initial state
+            IsMobile = await JS.InvokeAsync<bool>("blazorHelpers.isMobile");
+
+            // register for future resize events
+            await JS.InvokeVoidAsync("blazorHelpers.registerResizeHandler", _dotnetRef);
+
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public Task OnBrowserResize(int width)
+    {
+        var mobile = width < 768;
+        if (mobile != IsMobile)
+        {
+            IsMobile = mobile;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _dotnetRef?.Dispose();
     }
 }
