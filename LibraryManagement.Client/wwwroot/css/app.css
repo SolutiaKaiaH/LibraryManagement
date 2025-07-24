@@ -1,6 +1,7 @@
 :root {
   /* Core brand palette */
   --orange-primary: #ff5400;
+  --light-grey: rgba(0, 0, 0, 0.2)
 }
 
 html,
@@ -117,58 +118,80 @@ code {
 
 /*Nav Bar*/
 .e-menu-wrapper {
-  text-align: center;
+    text-align: center;
 }
 .menu-control {
-  margin-top: 80px;
-  text-align: center;
+    margin-top: 80px;
 }
 .e-menu-wrapper ul .e-menu-item,
 .e-menu-container ul .e-menu-item {
-  padding: 0px 24px;
+    padding: 0 24px 16px;
 }
-.e-menu-container .e-menu{
+.e-menu-container .e-menu {
     width: 100vw;
     padding: 0px 24px;
 }
 
-.e-menu-wrapper ul.e-menu:not(.e-vertical), .e-menu-container ul.e-menu:not(.e-vertical) {
+.e-menu-wrapper ul.e-menu:not(.e-vertical),
+.e-menu-container ul.e-menu:not(.e-vertical) {
     padding: 0px 24px;
 }
 @media (min-width: 768px) {
     .e-menu-wrapper .e-menu .e-menu-item.e-selected,
-    .e-menu-wrapper .e-menu .e-menu-item.e-active-item,
-    .e-menu-container .e-menu .e-menu-item.e-selected,
-    .e-menu-container .e-menu .e-menu-item.e-active-item {
-        background: transparent;
-        border-bottom: 3px solid var(--orange-primary);
-        padding-bottom: 0.5rem;
+    .e-menu-container .e-menu .e-menu-item.e-selected{
+    background: transparent;
     }
+
+.e-menu-wrapper .e-menu .e-menu-item.e-selected,
+.e-menu-container .e-menu .e-menu-item.e-selected {
+    position: relative;
+}
+
+.e-menu-wrapper .e-menu .e-menu-item.e-selected::after,
+.e-menu-container .e-menu .e-menu-item.e-selected::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; 
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--orange-primary);
+}
     .e-menu-wrapper,
     .e-menu-container {
-        background: none;
-        max-width: 100vw;
-        border-bottom: 1px solid var(--orange-primary);
-        border-radius: 0px;
+    background: none;
+    max-width: 100vw;
+    border-bottom: 1px solid var(--orange-primary);
+    border-radius: 0px;
     }
 }
 
 @media (max-width: 768px) {
-    .e-menu-wrapper, .e-menu-container {
-        background: white;
-       
+    .e-menu-wrapper,
+    .e-menu-container {
+    background: white;
     }
-    .e-menu-wrapper.e-hamburger, .e-menu-container.e-hamburger {
-        border-bottom: 1px solid var(--orange-primary);
-        border-radius: 0px;
+    .e-menu-wrapper.e-hamburger,
+    .e-menu-container.e-hamburger {
+    border-bottom: 1px solid var(--orange-primary);
+    border-radius: 0px;
     }
 
-    .e-menu-wrapper.e-hamburger ul.e-menu:not(.e-vertical), .e-menu-container.e-hamburger ul.e-menu:not(.e-vertical) {
-        background: white
+    .e-menu-wrapper.e-hamburger ul.e-menu:not(.e-vertical),
+    .e-menu-container.e-hamburger ul.e-menu:not(.e-vertical) {
+    background: white;
     }
-    .e-menu-wrapper.e-hamburger ul.e-menu .e-menu-item, .e-menu-container.e-hamburger ul.e-menu .e-menu-item{
-        background: white
+    .e-menu-wrapper.e-hamburger ul.e-menu .e-menu-item,
+    .e-menu-container.e-hamburger ul.e-menu .e-menu-item {
+    background: white;
     }
 }
+.e-menu-container ul.e-menu:not(.e-vertical) {
+    display: flex;
+}
 
-    /*End Nav Bar*/
+.e-menu-container ul.e-menu > li#new,
+.e-menu-wrapper ul.e-menu > li#new {
+    margin-left: auto;
+}
+/*End Nav Bar*/

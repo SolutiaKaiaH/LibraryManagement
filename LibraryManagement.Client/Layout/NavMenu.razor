@@ -1,10 +1,11 @@
 ﻿@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.SplitButtons
 @inject NavigationManager Nav
 @inject IJSRuntime JS
 
 <div class="control-section">
     <div class="menu-control">
-        <SfMenu CssClass="top-menu" Items="@MenuItems" HamburgerMode="@IsMobile" ShowItemOnClick="true"></SfMenu>
+        <SfMenu CssClass="top-menu" Items="@MenuItems" HamburgerMode="@IsMobile" ShowItemOnClick="@IsMobile"></SfMenu>
     </div>
 </div>
 
@@ -18,9 +19,12 @@
         new MenuItem { Id = "readingLog", Text = "Reading Log", Url="/reading-log" },
         new MenuItem { Id = "wantToRead", Text = "Want to Read", Url="/want-to-read" },
         new MenuItem { Id = "allBooks", Text = "All Books", ParentId = "books", Url="/books" },
-        new MenuItem { Id = "currentlyReading", Text = "Currently Reading", ParentId = "books", Url="/currently-reading" },
-        new MenuItem { Id = "didNotFinish", Text = "Did Not Finish", ParentId = "books", Url="/did-not-finish" },
-        new MenuItem { Id = "completedBooks", Text = "Completed Books", ParentId = "books", Url="/completed-books" }
+        new MenuItem { Id = "currentlyReading", Text = "Currently Reading", ParentId = "books", Url="/books/currently-reading" },
+        new MenuItem { Id = "didNotFinish", Text = "Did Not Finish", ParentId = "books", Url="/books/did-not-finish" },
+        new MenuItem { Id = "completedBooks", Text = "Completed Books", ParentId = "books", Url="/books/completed-books" },
+        new MenuItem { Id = "new", Text = "New", IconCss = "bi bi-plus-lg" },
+        new MenuItem { Id = "newTemplate", Text = "Template", ParentId = "new", Url="/new/template" },
+        new MenuItem { Id = "newLead", Text = "Lead", ParentId = "new", Url="/new/lead" },
     };
 
     private class MenuItem
@@ -30,6 +34,7 @@
         public string ParentId { get; set; }
         public string? IconCss {get;set;}
         public string? Url { get; set; }
+        public string? CssClass { get; set; }
     }
 
 
