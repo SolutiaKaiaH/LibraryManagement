@@ -44,10 +44,7 @@
         {
             _dotnetRef = DotNetObjectReference.Create(this);
 
-            // get initial state
             IsMobile = await JS.InvokeAsync<bool>("blazorHelpers.isMobile");
-
-            // register for future resize events
             await JS.InvokeVoidAsync("blazorHelpers.registerResizeHandler", _dotnetRef);
 
             StateHasChanged();
