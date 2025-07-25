@@ -1,7 +1,12 @@
 :root {
-  /* Core brand palette */
-  --orange-primary: #ff5400;
-  --light-grey: rgba(0, 0, 0, 0.2)
+    /* Core brand palette */
+    --orange-primary: #ff5400;
+    --blue-primary: #2C3A5C;
+    --blue-primary-hover: #4F5B77;
+    --blue-primary-pressed: #727C92;
+    --blue-secondary-hover: #EDF3FA;
+    --blue-secondary-pressed: #D1E0F2;
+    --light-grey: rgba(0, 0, 0, 0.2)
 }
 
 html,
@@ -116,6 +121,29 @@ code {
   color: #c02d76;
 }
 
+/*Buttons*/
+.button-blank{
+    border:none;
+}
+.button-blank:hover {
+    background: var(--blue-secondary-hover) !important;
+}
+.button-blank:focus {
+    background: var(--blue-secondary-hover) !important;
+    color: var(--blue-primary) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--blue-primary) !important;
+}
+.button-blank:active {
+    background: var(--blue-secondary-pressed);
+    transform: scale(0.98);
+}
+.e-input-group-icon:hover {
+    background: var(--blue-secondary-hover) !important;
+    color: var(--blue-primary) !important;
+}
+/*End Buttons*/
+
 /*Nav Bar*/
 .e-menu-wrapper {
     text-align: center;
@@ -133,17 +161,72 @@ code {
 .e-menu-container ul.e-menu:not(.e-vertical) {
     padding: 0px 24px;
 }
+.e-menu-container ul.e-menu:not(.e-vertical) {
+    display: flex;
+}
+
+.e-menu-container ul.e-menu > li#new,
+.e-menu-wrapper ul.e-menu > li#new {
+    margin-left: auto;
+}
+
+.sub-menu-control {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    background: #fff;
+}
+
+.sub-menu-control .logo img {
+    height: 80px;
+}
+
+.sub-menu-control .search-container {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.sub-menu-control .search-container .e-input-group {
+    width: 100%;
+}
+
+.sub-menu-control .e-btn,
+.sub-menu-control .e-css.e-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    color: black;
+    border: none;
+}
+
+.sub-menu-control .e-btn-group:not(.e-outline),
+.sub-menu-control .e-css.e-btn-group:not(.e-outline) {
+    box-shadow: none;
+    gap: 10px;
+}
+
 @media (min-width: 768px) {
     .e-menu-wrapper .e-menu .e-menu-item.e-selected,
     .e-menu-container .e-menu .e-menu-item.e-selected{
     background: transparent;
     }
-
     .e-menu-wrapper .e-menu .e-menu-item.e-selected,
     .e-menu-container .e-menu .e-menu-item.e-selected {
         position: relative;
     }
-
+    .e-menu-wrapper .e-menu .e-menu-item.e-focused,
+    .e-menu-container .e-menu .e-menu-item.e-focused {
+        position: relative;
+        background: var(--blue-secondary-hover);
+    }
+    .e-menu-item.e-focused {
+        background: var(--blue-secondary-hover) !important;
+    }
     .e-menu-wrapper .e-menu .e-menu-item.e-selected::after,
     .e-menu-container .e-menu .e-menu-item.e-selected::after {
         content: "";
@@ -173,7 +256,6 @@ code {
     border-bottom: 1px solid var(--orange-primary);
     border-radius: 0px;
     }
-
     .e-menu-wrapper.e-hamburger ul.e-menu:not(.e-vertical),
     .e-menu-container.e-hamburger ul.e-menu:not(.e-vertical) {
     background: white;
@@ -182,46 +264,12 @@ code {
     .e-menu-container.e-hamburger ul.e-menu .e-menu-item {
     background: white;
     }
-}
-.e-menu-container ul.e-menu:not(.e-vertical) {
-    display: flex;
-}
-.e-menu-container ul.e-menu > li#new,
-.e-menu-wrapper ul.e-menu > li#new {
-    margin-left: auto;
-}
-.sub-menu-control {
-    margin-top: 80px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px;
-    background: #fff;
-}
-.sub-menu-control .logo img {
-    height: 80px;
-}
-.sub-menu-control .search-container {
-    flex: 1;
-    max-width: 500px;
-    margin: 0 20px;
-}
-.sub-menu-control .search-container .e-input-group {
-    width: 100%;
-}
-.sub-menu-control .e-btn,
-.sub-menu-control .e-css.e-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: white;
-    color: black;
-    border: none;
-}
-.sub-menu-control .e-btn-group:not(.e-outline),
-.sub-menu-control .e-css.e-btn-group:not(.e-outline) {
-    box-shadow: none;
-    gap: 10px;
+    .sub-menu-control .logo img {
+        display:none;
+    }
+    .sub-menu-control {
+        flex-direction: column;
+        gap:20px;
+    }
 }
 /*End Nav Bar*/
