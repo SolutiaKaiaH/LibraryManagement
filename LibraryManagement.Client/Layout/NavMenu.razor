@@ -1,9 +1,30 @@
-﻿@using Syncfusion.Blazor.Navigations
+﻿@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.SplitButtons
 @inject NavigationManager Nav
 @inject IJSRuntime JS
 
 <div class="control-section">
+    <div class="sub-menu-control">
+        <div class="logo">
+            <img src="/images/FELogo.png" alt="Logo" />
+        </div>
+        <div class="search-container">
+          <SfTextBox 
+            Placeholder="Search jobs, address, name..." 
+            Width="100%" 
+            ShowClearButton="true"
+            @ref="TextBoxSearchObj"
+            Created="@AddSearchIcon">    
+          </SfTextBox>
+        </div>
+        <SfButtonGroup>
+            <ButtonGroupButton IconCss="bi bi-map" Content="Location" @onclick="GoLocation"></ButtonGroupButton>
+            <ButtonGroupButton IconCss="bi bi-person" Content="Profile" @onclick="GoProfile"></ButtonGroupButton>
+            <ButtonGroupButton IconCss="bi bi-gear" Content="Settings" @onclick="GoSettings"></ButtonGroupButton>
+        </SfButtonGroup>
+    </div>
     <div class="menu-control">
         <SfMenu CssClass="top-menu" Items="@MenuItems" HamburgerMode="@IsMobile" ShowItemOnClick="@IsMobile"></SfMenu>
     </div>
@@ -37,6 +58,15 @@
         public string? CssClass { get; set; }
     }
 
+    void GoLocation() => Nav.NavigateTo("/location");
+    void GoProfile() => Nav.NavigateTo("/profile");
+    void GoSettings() => Nav.NavigateTo("/settings");
+
+    public SfTextBox TextBoxSearchObj;
+    public void AddSearchIcon()
+    {
+        this.TextBoxSearchObj.AddIconAsync("prepend", "bi bi-search");
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

@@ -120,9 +120,6 @@ code {
 .e-menu-wrapper {
     text-align: center;
 }
-.menu-control {
-    margin-top: 80px;
-}
 .e-menu-wrapper ul .e-menu-item,
 .e-menu-container ul .e-menu-item {
     padding: 0 24px 16px;
@@ -142,21 +139,21 @@ code {
     background: transparent;
     }
 
-.e-menu-wrapper .e-menu .e-menu-item.e-selected,
-.e-menu-container .e-menu .e-menu-item.e-selected {
-    position: relative;
-}
+    .e-menu-wrapper .e-menu .e-menu-item.e-selected,
+    .e-menu-container .e-menu .e-menu-item.e-selected {
+        position: relative;
+    }
 
-.e-menu-wrapper .e-menu .e-menu-item.e-selected::after,
-.e-menu-container .e-menu .e-menu-item.e-selected::after {
-    content: "";
-    position: absolute;
-    bottom: -1px; 
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--orange-primary);
-}
+    .e-menu-wrapper .e-menu .e-menu-item.e-selected::after,
+    .e-menu-container .e-menu .e-menu-item.e-selected::after {
+        content: "";
+        position: absolute;
+        bottom: -1px; 
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--orange-primary);
+    }
     .e-menu-wrapper,
     .e-menu-container {
     background: none;
@@ -189,9 +186,42 @@ code {
 .e-menu-container ul.e-menu:not(.e-vertical) {
     display: flex;
 }
-
 .e-menu-container ul.e-menu > li#new,
 .e-menu-wrapper ul.e-menu > li#new {
     margin-left: auto;
+}
+.sub-menu-control {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    background: #fff;
+}
+.sub-menu-control .logo img {
+    height: 80px;
+}
+.sub-menu-control .search-container {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
+}
+.sub-menu-control .search-container .e-input-group {
+    width: 100%;
+}
+.sub-menu-control .e-btn,
+.sub-menu-control .e-css.e-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    color: black;
+    border: none;
+}
+.sub-menu-control .e-btn-group:not(.e-outline),
+.sub-menu-control .e-css.e-btn-group:not(.e-outline) {
+    box-shadow: none;
+    gap: 10px;
 }
 /*End Nav Bar*/

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\LibraryManagement.Shared\LibraryManagement.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder\" />
+  </ItemGroup>
+
 </Project>
