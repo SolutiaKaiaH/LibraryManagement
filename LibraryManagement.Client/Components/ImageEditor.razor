@@ -1,0 +1,75 @@
+﻿@using Syncfusion.Blazor.ImageEditor
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Spinner
+
+<div class="image-edit-container"
+     @onmouseenter="() => showPencil = true"
+     @onmouseleave="() => showPencil = false">
+  <img src="@ImageUrl" class="editable-image" />
+
+  @if (showPencil)
+  {
+    <button class="edit-btn" @onclick="OpenEditor">
+      <i class="bi bi-pencil"></i>
+    </button>
+  }
+</div>
+
+<SfDialog Width="800px"
+          Height="650px"
+          IsModal="true"
+          ShowCloseIcon="true"
+          @bind-Visible="isDialogVisible">
+  <DialogTemplates>
+    <Header>Edit Image</Header>
+    <Content>
+      <div class="editor-wrapper">
+        @if (isLoading)
+        {
+          <div class="spinner-overlay">
+              <SfSpinner Size="40" Type="SpinnerType.Bootstrap5" Visible="true"></SfSpinner>
+          </div>
+        }
+        <SfImageEditor @ref="editor" Height="500px">
+          <ImageEditorEvents Created="OnCreated"></ImageEditorEvents>
+        </SfImageEditor>
+      </div>
+    </Content>
+    <FooterTemplate>
+      <div class="action-buttons">
+          <button class="febtn febtn-primary me-2" @onclick="SaveAndClose">
+            Save
+          </button>
+          <button class="febtn febtn-secondary" @onclick="() => isDialogVisible = false">
+            Cancel
+          </button>
+      </div>
+    </FooterTemplate>
+  </DialogTemplates>
+</SfDialog>
+
+@code {
+  [Parameter] public string ImageUrl { get; set; } = "";
+  [Parameter] public EventCallback<string> OnImageSaved { get; set; }
+
+  private bool showPencil;
+  private bool isDialogVisible;
+  private bool isLoading;
+  private SfImageEditor editor;
+
+  private void OpenEditor()
+  {
+    isLoading = true;
+    isDialogVisible = true;
+  }
+
+  private void OnCreated()
+  {
+      editor.OpenAsync(ImageUrl);
+  }
+
+  private async Task SaveAndClose()
+  {
+    isDialogVisible = false;
+  }
+}

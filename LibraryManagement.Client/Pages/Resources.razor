@@ -1,0 +1,17 @@
+﻿@page "/resources"
+@using LibraryManagement.Client.Components
+
+<h1>Edit Some Images</h1>
+
+<ImageEditor ImageUrl="images/FELogo.png"
+                   OnImageSaved="HandleSave" />
+
+<ImageEditor ImageUrl="images/FELogo.png"
+                  OnImageSaved="HandleSave" />
+
+@code {
+  private void HandleSave(string dataUrl)
+  {
+    Console.WriteLine($"Saved: {dataUrl}");
+  }
+}
