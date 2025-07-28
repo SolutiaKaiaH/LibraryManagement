@@ -2,8 +2,8 @@
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.SplitButtons
 @using static LibraryManagement.Client.Layout.MainLayout
-@inject NavigationManager NavManager
 @inject NavigationManager Nav
+@using Syncfusion.Blazor.Navigations 
 
 <nav class="navbar">
     <div class="top-wrapper">
@@ -66,11 +66,16 @@
             }
         </ul>
         <div class="new-button">
-            <button class="febtn febtn-secondary">
-                <i class="bi bi-plus-lg"></i>
-                New   
-                <i class="drop-down bi bi-chevron-down"></i>
-            </button>
+            <SfDropDownButton CssClass="febtn-secondary"
+                              IconCss="bi bi-plus-lg"
+                              Content="New">
+                <DropDownMenuItems>
+                    <DropDownMenuItem Text="Lead" IconCss="bi bi-bookmark"></DropDownMenuItem>
+                    <DropDownMenuItem Text="Job" IconCss="bi bi-briefcase"></DropDownMenuItem>
+                    <DropDownMenuItem Text="User" IconCss="bi bi-person"></DropDownMenuItem>
+                </DropDownMenuItems>
+                <DropDownButtonEvents ItemSelected="OnNewItemSelected" />
+            </SfDropDownButton>
         </div>
     </div>
 </nav>
@@ -80,11 +85,11 @@
     [Parameter] public List<NavItem> Items { get; set; } = new();
 
     private bool isOpen = false;
-    private bool ShowLocationPopup;
+    private bool ShowLocationPopup = false;
 
     void ToggleNav() => isOpen = !isOpen;
 
-    void GoLocation() => ShowLocationPopup = true;
+    void GoLocation() => ShowLocationPopup = !ShowLocationPopup;
     void GoProfile() => Nav.NavigateTo("/profile");
     void GoSettings() => Nav.NavigateTo("/settings");
 
@@ -92,5 +97,21 @@
     public void AddSearchIcon()
     {
         this.TextBoxSearchObj.AddIconAsync("prepend", "bi bi-search");
+    }
+
+    private void OnNewItemSelected(MenuEventArgs args)
+    {
+        switch (args.Item.Text)
+        {
+            case "Lead":
+                Nav.NavigateTo("/leads/create");
+                break;
+            case "Job":
+                Nav.NavigateTo("/jobs/create");
+                break;
+            case "User":
+                Nav.NavigateTo("/users/create");
+                break;
+        }
     }
 }

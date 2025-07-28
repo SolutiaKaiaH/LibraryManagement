@@ -325,6 +325,7 @@ margin: 0 20px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     display: flex;
     gap: 10px;
+    align-items:center
 }
 .febtn-primary {
     color: white;
@@ -343,6 +344,7 @@ margin: 0 20px;
 }
 .febtn-secondary:hover {
     background-color: var(--blue-secondary-hover);
+    color: var(--blue-primary)
 }
 .febtn-secondary:active {
     background-color: var(--blue-secondary-pressed);
@@ -354,3 +356,7 @@ margin: 0 20px;
     box-shadow: none !important;
 }
 /* End Buttons*/
+
+.e-dropdown-popup ul{
+    background-color: white;
+}
