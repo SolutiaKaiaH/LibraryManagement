@@ -1,0 +1,96 @@
+﻿@using LibraryManagement.Client.Components
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.SplitButtons
+@using static LibraryManagement.Client.Layout.MainLayout
+@inject NavigationManager NavManager
+@inject NavigationManager Nav
+
+<nav class="navbar">
+    <div class="top-wrapper">
+        <div class="logo">
+            <img src="/images/FELogo.png" alt="Logo" />
+        </div>
+        <div class="search-container">
+          <SfTextBox 
+            Placeholder="Search jobs, address, name..." 
+            Width="100%" 
+            ShowClearButton="true"
+            @ref="TextBoxSearchObj"
+            Created="@AddSearchIcon">    
+          </SfTextBox>
+        </div>
+        <SfButtonGroup>
+            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-map" Content="Location" @onclick="GoLocation"></ButtonGroupButton>
+            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-person" Content="Profile" @onclick="GoProfile"></ButtonGroupButton>
+            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-gear" Content="Settings" @onclick="GoSettings"></ButtonGroupButton>
+        </SfButtonGroup>
+    </div>
+    <div class="wrapper">
+        <button class="toggler" @onclick="ToggleNav">
+            <span>&#9776;</span>
+        </button>
+
+        <ul class="menu @(isOpen ? "open" : "")">
+            @foreach (var item in Items)
+            {
+                <li class="item">
+                    @if (item.Children?.Any() == true)
+                    {
+                        <div class="dropdown">
+                            <NavLink href="@item.Url" class="link" ActiveClass="active">
+                                @item.Label 
+                                <i class="drop-down bi bi-chevron-down"></i></NavLink>
+                            <ul class="dropdown-menu">
+                                @foreach (var child in item.Children)
+                                {
+                                    <li>
+                                        <NavLink href="@child.Url" class="sub-link" ActiveClass="active">
+                                            @child.Label
+                                        </NavLink>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <NavLink href="@item.Url" class="link" ActiveClass="active">
+                            @if (item.Label == "Home")
+                            {
+                                <i class="house bi bi-house-door"></i>
+                            }
+                            @item.Label
+                        </NavLink>
+                    }
+                </li>
+            }
+        </ul>
+        <div class="new-button">
+            <button class="febtn febtn-secondary">
+                <i class="bi bi-plus-lg"></i>
+                New   
+                <i class="drop-down bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<LocationPopup @bind-Visibility="ShowLocationPopup" />
+
+@code {
+    [Parameter] public List<NavItem> Items { get; set; } = new();
+
+    private bool isOpen = false;
+    private bool ShowLocationPopup;
+
+    void ToggleNav() => isOpen = !isOpen;
+
+    void GoLocation() => ShowLocationPopup = true;
+    void GoProfile() => Nav.NavigateTo("/profile");
+    void GoSettings() => Nav.NavigateTo("/settings");
+
+    public SfTextBox TextBoxSearchObj;
+    public void AddSearchIcon()
+    {
+        this.TextBoxSearchObj.AddIconAsync("prepend", "bi bi-search");
+    }
+}

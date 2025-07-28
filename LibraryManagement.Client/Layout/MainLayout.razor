@@ -2,7 +2,8 @@
 <div class="app-container">
 
     <header class="app-header">
-        <NavMenu />
+        <NavBar Items="@navItems">
+        </NavBar>
     </header>
 
     <main class="app-main px-4">
@@ -10,3 +11,34 @@
     </main>
 
 </div>
+
+
+@code {
+    public class NavItem
+{
+    public string Label   { get; set; } = "";
+    public string Url     { get; set; } = "";
+    public List<NavItem>? Children { get; set; }
+}
+
+
+    private List<NavItem> navItems = new()
+  {
+    new() { Label = "Home", Url = "/home" },
+    new() { Label = "Leads & Jobs", Url = "/leads" },
+    new() { Label = "Production", Url = "/production" },
+    new() { Label = "Tracking", Url = "/tracking" },
+    new() {
+      Label = "Reports",
+      Url = "/reports",
+      Children = new()
+      {
+        new() { Label = "Overview", Url = "/reports/overview" },
+        new() { Label = "Details",  Url = "/reports/details" }
+      }
+    },
+    new() { Label = "Resources", Url = "/resources" },
+    new() { Label = "Payments",  Url = "/payments" },
+    new() { Label = "My Work",   Url = "/my-work" }
+  };
+}

@@ -1,0 +1,26 @@
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+
+<SfDialog Width="335px"
+          IsModal="true"
+          @bind-Visible="Visibility">
+    <DialogTemplates>
+        <Header>Location Selector</Header>
+        <Content>
+            <p>Select a Location.</p>
+        </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="OK"
+                      IsPrimary="true"
+                      OnClick="()=> Visibility = false" />
+    </DialogButtons>
+</SfDialog>
+
+@code {
+    [Parameter]
+    public bool Visibility { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> VisibilityChanged { get; set; }
+}
