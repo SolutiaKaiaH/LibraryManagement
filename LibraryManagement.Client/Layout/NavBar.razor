@@ -19,18 +19,28 @@
             Created="@AddSearchIcon">    
           </SfTextBox>
         </div>
-        <SfButtonGroup>
-            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-map" Content="Location" @onclick="GoLocation"></ButtonGroupButton>
-            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-person" Content="Profile" @onclick="GoProfile"></ButtonGroupButton>
-            <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-gear" Content="Settings" @onclick="GoSettings"></ButtonGroupButton>
-        </SfButtonGroup>
+        <div class="nav-button-group">
+            <SfButtonGroup>
+                <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-map" Content="Location" @onclick="GoLocation"></ButtonGroupButton>
+                <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-person" Content="Profile" @onclick="GoProfile"></ButtonGroupButton>
+                <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-gear" Content="Settings" @onclick="GoSettings"></ButtonGroupButton>
+            </SfButtonGroup>
+        </div>
     </div>
     <div class="wrapper">
-        <button class="toggler" @onclick="ToggleNav">
-            <span>&#9776;</span>
+        <button class="toggler febtn febtn-primary" @onclick="ToggleNav">
+            <div><i class="bi bi-list"></i></div> 
+            <div>Menu</div>
         </button>
 
         <ul class="menu @(isOpen ? "open" : "")">
+            <div class="nav-button-group-mobile">
+                <SfButtonGroup>
+                    <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-map" Content="Location" @onclick="GoLocation"></ButtonGroupButton>
+                    <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-person" Content="Profile" @onclick="GoProfile"></ButtonGroupButton>
+                    <ButtonGroupButton CssClass="febtn-secondary" IconCss="bi bi-gear" Content="Settings" @onclick="GoSettings"></ButtonGroupButton>
+                </SfButtonGroup>
+            </div>
             @foreach (var item in Items)
             {
                 <li class="item">
@@ -66,7 +76,7 @@
             }
         </ul>
         <div class="new-button">
-            <SfDropDownButton CssClass="febtn-secondary"
+            <SfDropDownButton CssClass="febtn febtn-secondary"
                               IconCss="bi bi-plus-lg"
                               Content="New">
                 <DropDownMenuItems>
