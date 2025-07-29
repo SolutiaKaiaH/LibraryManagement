@@ -4,6 +4,7 @@
 @using static LibraryManagement.Client.Layout.MainLayout
 @inject NavigationManager Nav
 @using Syncfusion.Blazor.Navigations 
+@inject IJSRuntime JS
 
 <nav class="navbar">
     <div class="top-wrapper">
@@ -97,7 +98,14 @@
     private bool isOpen = false;
     private bool ShowLocationPopup = false;
 
-    void ToggleNav() => isOpen = !isOpen;
+    private async Task ToggleNav()
+    {
+        isOpen = !isOpen;
+        if (isOpen)
+            await JS.InvokeVoidAsync("document.body.classList.add", "no-scroll");
+        else
+            await JS.InvokeVoidAsync("document.body.classList.remove", "no-scroll");
+    }
 
     void GoLocation() => ShowLocationPopup = !ShowLocationPopup;
     void GoProfile() => Nav.NavigateTo("/profile");

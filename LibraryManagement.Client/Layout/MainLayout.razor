@@ -15,30 +15,76 @@
 
 @code {
     public class NavItem
-{
-    public string Label   { get; set; } = "";
-    public string Url     { get; set; } = "";
-    public List<NavItem>? Children { get; set; }
-}
-
+    {
+        public string Label   { get; set; } = "";
+        public string Url     { get; set; } = "";
+        public List<NavItem>? Children { get; set; }
+    }
 
     private List<NavItem> navItems = new()
-  {
-    new() { Label = "Home", Url = "/home" },
-    new() { Label = "Leads & Jobs", Url = "/leads" },
-    new() { Label = "Production", Url = "/production" },
-    new() { Label = "Tracking", Url = "/tracking" },
-    new() {
-      Label = "Reports",
-      Url = "/reports",
-      Children = new()
-      {
-        new() { Label = "Overview", Url = "/reports/overview" },
-        new() { Label = "Details",  Url = "/reports/details" }
-      }
-    },
-    new() { Label = "Resources", Url = "/resources" },
-    new() { Label = "Payments",  Url = "/payments" },
-    new() { Label = "My Work",   Url = "/my-work" }
-  };
+    {
+        new() { Label = "Home", Url = "/home" },
+        new()
+        {
+            Label = "Leads & Jobs",
+            Url = "/leads",
+            Children = new()
+            {
+                new() { Label = "View Leads", Url = "/leads/view" },
+                new() { Label = "Create Lead", Url = "/leads/create" }
+            }
+        },
+        new()
+        {
+            Label = "Production",
+            Url = "/production",
+            Children = new()
+            {
+                new() { Label = "Overview", Url = "/production/overview" },
+                new() { Label = "History", Url = "/production/history" }
+            }
+        },
+        new()
+        {
+            Label = "Tracking",
+            Url = "/tracking",
+            Children = new()
+            {
+                new() { Label = "By Client", Url = "/tracking/client" },
+                new() { Label = "By Order", Url = "/tracking/order" }
+            }
+        },
+        new()
+        {
+            Label = "Reports",
+            Url = "/reports",
+            Children = new()
+            {
+                new() { Label = "Overview", Url = "/reports/overview" },
+                new() { Label = "Details", Url = "/reports/details" }
+            }
+        },
+        new()
+        {
+            Label = "Resources",
+            Url = "/resources",
+            Children = new()
+            {
+                new() { Label = "Documentation", Url = "/resources/documentation" },
+                new() { Label = "Tools", Url = "/resources/tools" }
+            }
+        },
+        new()
+        {
+            Label = "Payments",
+            Url = "/payments",
+            Children = new()
+            {
+                new() { Label = "Invoices", Url = "/payments/invoices" },
+                new() { Label = "Transactions", Url = "/payments/transactions" }
+            }
+        },
+        new() { Label = "My Work", Url = "/my-work" }
+    };
+
 }
