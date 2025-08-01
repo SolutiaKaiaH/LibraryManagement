@@ -12,6 +12,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddSyncfusionBlazor();
 
 var licenseKey = builder.Configuration["Syncfusion:LicenseKey"];
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey);
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JEaF5cXmRCdkx0R3xbf1x1ZFxMZF1bRnBPMyBoS35Rc0VkW3teeXZUQ2FfUkZ/VEFd");
 
 await builder.Build().RunAsync();

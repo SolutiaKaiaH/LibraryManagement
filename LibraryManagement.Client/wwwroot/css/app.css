@@ -150,7 +150,7 @@ code {
   width: 100%;
   border-bottom: 1px solid var(--orange-primary);
   background: #fff;
-  z-index: 9999;
+  z-index: 1000;
 }
 .wrapper {
   display: flex;
