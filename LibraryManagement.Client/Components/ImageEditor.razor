@@ -26,9 +26,17 @@
     <Header>Edit Image</Header>
     <Content>
       <div class="editor-wrapper">
-        <SfImageEditor @ref="editor" Height="500px">
-          <ImageEditorEvents Created="OnCreated"></ImageEditorEvents>
-        </SfImageEditor>
+        <SfImageEditor @ref="editor"
+                        Height="500px"
+                        Toolbar="customToolbarItem"
+                        EnableUndoRedo="false" />
+
+        @if (isLoading)
+        {
+            <div class="editor-spinner-overlay">
+                <SfSpinner Visible="true" Label="Loading..." />
+            </div>
+        }
       </div>
     </Content>
     <FooterTemplate>
@@ -48,14 +56,22 @@
     [Parameter] public string ImageUrl { get; set; } = "";
     [Parameter] public EventCallback<string> OnImageSaved { get; set; }
 
+    private bool isLoading = false;
     private bool showPencil;
     private bool isDialogVisible;
-    private SfImageEditor editor;
-
     private bool shouldLoadImage;
+    private SfImageEditor editor;
+    private List<ImageEditorToolbarItemModel> customToolbarItem = new List<ImageEditorToolbarItemModel>()
+    {
+        new ImageEditorToolbarItemModel { Name = "Zoom" },
+        new ImageEditorToolbarItemModel { Name = "Annotation" },
+        new ImageEditorToolbarItemModel { Name = "Crop" },
+        new ImageEditorToolbarItemModel { Name = "Rotate" },
+    };
 
     private void OpenEditor()
     {
+        isLoading = true;
         isDialogVisible = true;
         shouldLoadImage = true;
     }
@@ -93,6 +109,8 @@
             shouldLoadImage = false;
             await Task.Delay(50);
             await editor.OpenAsync(ImageUrl);
+            isLoading = false;
+            StateHasChanged();
         }
     }
 }
