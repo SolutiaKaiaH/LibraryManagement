@@ -1,14 +1,36 @@
 ﻿@page "/resources"
 @using LibraryManagement.Client.Components
 
-<ImageEditor ImageUrl="images/FELogo.png"
-                   OnImageSaved="HandleSave" />
 
-<ImageEditor ImageUrl="images/FELogo.png"
-                  OnImageSaved="HandleSave" />
+
+@if (imageEditorVisible)
+{
+    <ImageEditor 
+        ImageUrl=@imageUrl 
+        OnImageSaved="(string dataUrl) => {HandleSave(dataUrl); HideImageEditor();}"
+        OnCancel="HideImageEditor">
+    </ImageEditor>
+}
+
+<img src="/images/FELogo.png" @onclick='() => ShowImageEditor("images/FELogo.png")'/>
+
 
 @code {
-  private void HandleSave(string dataUrl)
+    private string imageUrl = "";
+    private bool imageEditorVisible = false;
+
+    private void ShowImageEditor(string url)
+    {
+        imageUrl = url;
+        imageEditorVisible = true;
+    }
+
+    private void HideImageEditor()
+    {
+        imageEditorVisible = false;
+    }
+
+    private void HandleSave(string dataUrl)
   {
     Console.WriteLine($"Saved: {dataUrl}");
   }

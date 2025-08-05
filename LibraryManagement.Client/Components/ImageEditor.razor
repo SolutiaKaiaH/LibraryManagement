@@ -3,40 +3,23 @@
 @using Syncfusion.Blazor.Spinner
 @inject HttpClient Http
 
-
-<div class="image-edit-container"
-     @onmouseenter="() => showPencil = true"
-     @onmouseleave="() => showPencil = false">
-  <img src="@ImageUrl" class="editable-image" />
-
-  @if (showPencil)
-  {
-    <button class="edit-btn" @onclick="OpenEditor">
-      <i class="bi bi-pencil"></i>
-    </button>
-  }
-</div>
-
 <SfDialog Width="800px"
           Height="650px"
           IsModal="true"
-          ShowCloseIcon="true"
-          @bind-Visible="isDialogVisible">
+          ShowCloseIcon="true">
+          <DialogEvents Closed="OnDialogClosedAsync" Created="OnDialogOpenedAsync"></DialogEvents>
   <DialogTemplates>
     <Header>Edit Image</Header>
     <Content>
       <div class="editor-wrapper">
         <SfImageEditor @ref="editor"
                         Height="500px"
-                        Toolbar="customToolbarItem"
-                        EnableUndoRedo="false" />
+                        Width="750px"
+                        @bind-ImageUrl=@ImageUrl/>
 
-        @if (isLoading)
-        {
-            <div class="editor-spinner-overlay">
-                <SfSpinner Visible="true" Label="Loading..." />
-            </div>
-        }
+        <div class="editor-spinner-overlay">
+            <SfSpinner @ref="spinner" Visible="true" Label="Loading..." />
+        </div>   
       </div>
     </Content>
     <FooterTemplate>
@@ -44,7 +27,7 @@
           <button class="febtn febtn-primary me-2" @onclick="SaveAndClose">
             Save
           </button>
-          <button class="febtn febtn-secondary" @onclick="() => isDialogVisible = false">
+          <button class="febtn febtn-secondary" @onclick="CloseEditor">
             Cancel
           </button>
       </div>
@@ -55,12 +38,12 @@
 @code {
     [Parameter] public string ImageUrl { get; set; } = "";
     [Parameter] public EventCallback<string> OnImageSaved { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
 
-    private bool isLoading = false;
-    private bool showPencil;
-    private bool isDialogVisible;
-    private bool shouldLoadImage;
-    private SfImageEditor editor;
+    private SfImageEditor editor { get; set; }
+    private SfSpinner spinner { get; set; }
+
     private List<ImageEditorToolbarItemModel> customToolbarItem = new List<ImageEditorToolbarItemModel>()
     {
         new ImageEditorToolbarItemModel { Name = "Zoom" },
@@ -69,11 +52,14 @@
         new ImageEditorToolbarItemModel { Name = "Rotate" },
     };
 
+    private void CloseEditor()
+    {
+        OnCancel.InvokeAsync();
+    }
+
     private void OpenEditor()
     {
-        isLoading = true;
-        isDialogVisible = true;
-        shouldLoadImage = true;
+
     }
 
     private async Task SaveAndClose()
@@ -81,7 +67,6 @@
         if (editor != null)
         {
             byte[] imageBytes = await editor.GetImageDataAsync();
-            isDialogVisible = false;
 
             // Call backend to upload image to blob storage
             var response = await Http.PostAsJsonAsync("apiex", new { ImagesBytes = imageBytes });
@@ -98,18 +83,24 @@
         }
     }
 
-    private void OnCreated()
+    async void OnDialogOpenedAsync()
     {
+        await Task.Delay(500);
+    }
+
+    async void OnDialogClosedAsync()
+    {
+        await OnCancel.InvokeAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (shouldLoadImage && isDialogVisible && editor != null)
+        if (editor != null && firstRender == true)
         {
-            shouldLoadImage = false;
-            await Task.Delay(50);
+            await Task.Delay(500);
             await editor.OpenAsync(ImageUrl);
-            isLoading = false;
+            await Task.Delay(500);
+            await spinner.HideAsync();
             StateHasChanged();
         }
     }
